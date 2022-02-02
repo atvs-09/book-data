@@ -1,4 +1,9 @@
-document.addEventListener("DOMContentLoaded", () => {
+const movieDataFunc = async () => {
+    const res = await axios.get("https://fastenalfreshers.netlify.app/json/movies.json")
+    return res.data;
+}
+
+const moviesPage = function (movies) {
 
     const table = document.createElement("table");
     const thead = document.createElement("thead");
@@ -8,31 +13,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const th2 = document.createElement("th");
     const th3 = document.createElement("th");
 
-    table.className += "table table-dark table-bordered border-light table-striped table-hover";
+    table.className += "table table-bordered border-dark table-striped table-hover";
 
     th1.innerHTML = "#";
     th1.setAttribute("align", "left");
-    th1.className += "h3";
-    th2.innerHTML = "Book Image";
+    th1.className += "h3 table-dark";
+    th2.innerHTML = "Movie Image";
     th2.setAttribute("align", "left");
-    th2.className += "h3";
-    th3.innerHTML = "Book Data";
+    th2.className += "h3 table-dark";
+    th3.innerHTML = "Movie Data";
     th3.setAttribute("align", "left");
-    th3.className += "h3";
+    th3.className += "h3 table-dark";
 
     thr.appendChild(th1);
     thr.appendChild(th2);
     thr.appendChild(th3);
     thead.appendChild(thr);
 
-    console.log('shubham: ', bookStore)
 
     var id = 1;
 
-    for (let book of bookStore) {
+    for (let movie of movies) {
 
         const tr = document.createElement("tr");
-        const td0 = document.createElement("td");
+        const td0 = document.createElement("th");
         const td1 = document.createElement("td");
         const td2 = document.createElement("td");
 
@@ -40,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         id++;
 
         const img = document.createElement("img");
-        img.src = book.thumbnailUrl;
+        img.src = movie.Images[0];
 
         const table2 = document.createElement("table");
         const tr21 = document.createElement("tr");
@@ -49,13 +53,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const tr24 = document.createElement("tr");
         const tr25 = document.createElement("tr");
         const tr26 = document.createElement("tr");
+        const tr27 = document.createElement("tr");
+        const tr28 = document.createElement("tr");
 
 
         {
             const td21 = document.createElement("td");
             const td22 = document.createElement("td");
             td21.innerHTML = "<strong>Title:</strong>";
-            td22.innerHTML = book.title;
+            td22.innerHTML = movie.Title;
             tr21.appendChild(td21);
             tr21.appendChild(td22);
         }
@@ -63,8 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             const td21 = document.createElement("td");
             const td22 = document.createElement("td");
-            td21.innerHTML = "<strong>Page Count:</strong>";
-            td22.innerHTML = book.pageCount;
+            td21.innerHTML = "<strong>Runtime:</strong>";
+            td22.innerHTML = movie.Runtime;
             tr22.appendChild(td21);
             tr22.appendChild(td22);
         }
@@ -72,10 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             const td21 = document.createElement("td");
             const td22 = document.createElement("td");
-            td21.innerHTML = "<strong>PublishedDate:</strong>";
-            const dateFull = book.publishedDate && book.publishedDate.$date ? book.publishedDate['$date'] : ''
-            const date = dateFull.substring(0, dateFull.indexOf('T'));
-            td22.innerHTML = date;
+            td21.innerHTML = "<strong>Year:</strong>";
+            td22.innerHTML = movie.Year;
             tr23.appendChild(td21);
             tr23.appendChild(td22);
         }
@@ -83,9 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             const td21 = document.createElement("td");
             const td22 = document.createElement("td");
-            td21.innerHTML = "<strong>Description:</strong>";
-            td21.setAttribute("valign", "top");
-            td22.innerHTML = book.shortDescription;
+            td21.innerHTML = "<strong>Director:</strong>";
+            td22.innerHTML = movie.Director;
             tr24.appendChild(td21);
             tr24.appendChild(td22);
         }
@@ -93,8 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             const td21 = document.createElement("td");
             const td22 = document.createElement("td");
-            td21.innerHTML = "<strong>Author:</strong>";
-            td22.innerHTML = book.authors;
+            td21.innerHTML = "<strong>Actors:</strong>";
+            td22.innerHTML = movie.Actors;
             tr25.appendChild(td21);
             tr25.appendChild(td22);
         }
@@ -102,10 +105,31 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             const td21 = document.createElement("td");
             const td22 = document.createElement("td");
-            td21.innerHTML = "<strong>Categories:</strong>";
-            td22.innerHTML = book.categories;
+            td21.innerHTML = "<strong>Writers:</strong>";
+            td22.innerHTML = movie.Writer;
             tr26.appendChild(td21);
             tr26.appendChild(td22);
+        }
+
+
+        {
+            const td21 = document.createElement("td");
+            const td22 = document.createElement("td");
+            td21.innerHTML = "<strong>IMDB:</strong>";
+            td22.innerHTML = movie.imdbRating;
+            td21.setAttribute("valign", "top");
+            tr27.appendChild(td21);
+            tr27.appendChild(td22);
+        }
+
+        {
+            const td21 = document.createElement("td");
+            const td22 = document.createElement("td");
+            td21.innerHTML = "<strong>Plot:</strong>";
+            td22.innerHTML = movie.Plot;
+            td21.setAttribute("valign", "top");
+            tr28.appendChild(td21);
+            tr28.appendChild(td22);
         }
 
         table2.appendChild(tr21);
@@ -114,6 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
         table2.appendChild(tr24);
         table2.appendChild(tr25);
         table2.appendChild(tr26);
+        table2.appendChild(tr27);
+        table2.appendChild(tr28);
 
         td1.appendChild(img);
         td2.appendChild(table2);
@@ -121,9 +147,19 @@ document.addEventListener("DOMContentLoaded", () => {
         tr.appendChild(td1);
         tr.appendChild(td2);
         tbody.appendChild(tr);
+
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+        document.getElementById("movies-data").appendChild(table);
+
     }
 
-    table.appendChild(thead);
-    table.appendChild(tbody);
-    document.getElementById("books-data").appendChild(table);
-})
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    const movies = await movieDataFunc();
+
+    moviesPage(movies);
+});

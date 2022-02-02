@@ -1,0 +1,55 @@
+[
+    {
+        "name": "mohan saran",
+        "email": "mohansaran@gmail.com",
+        "bookIds": [
+            7,
+            14,
+            20
+        ],
+        "favouriteShows": [
+            "Game of Thrones",
+            "Breaking Bad",
+            "Avatar"
+        ]
+    },
+    {
+        "name": "satwik",
+        "email": "satwik@gmail.com",
+        "bookIds": [
+            18,
+            23
+        ],
+        "favouriteShows": [
+            "Narcos",
+            "Breaking Bad",
+            "I Am Legend"
+        ]
+    },
+    {
+        "name": "vijay",
+        "email": "vijay@gmail.com",
+        "bookIds": [
+            18,
+            41
+        ],
+        "favouriteShows": [
+            "Narcos",
+            "Interstellar",
+            "Game of Thrones"
+        ]
+    },
+    {
+        "name": "anusha",
+        "email": "anusha@gmail.com",
+        "bookIds": [
+            18,
+            19
+        ],
+        "favouriteShows": [
+            "Narcos",
+            "Breaking Bad",
+            "Game of Thrones"
+        ]
+    }
+]
